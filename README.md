@@ -13,7 +13,9 @@ Instalação:
 
 2° A pasta "app" e todo seu conteúdo deverá ficar um nível acima da pasta "public_html".
 
-3° Criar o banco de dados, na pasta "app/sripts do banco" possui o script para criação do banco de dados e suas tabelas.
+3° Editar o arquivo "Config.php" na pasta "app/biblioteca" e inserir as informações para conexão com o banco de dados Mysql.
+
+4° Criar o banco de dados, na pasta "app/sripts do banco" possui o script para criação do banco de dados e suas tabelas.
 
 
 

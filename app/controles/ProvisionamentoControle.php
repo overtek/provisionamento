@@ -25,15 +25,6 @@ class ProvisionamentoControle extends Controle {
 		$this->carregaTabela();
     }
 	
-	
-	public function checa_sistema() {
-		# carrega o modelo Provisionamento
-		$this->modelo('Provisionamento');
-		
-		#executa o método de conferência do BD
-		$this->Provisionamento->getStatus();
-	}
-	
     
     /**
      * Método carregaTabela()

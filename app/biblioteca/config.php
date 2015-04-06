@@ -13,7 +13,7 @@ class Config {
 			'servidor' => 'localhost',
 			'usuario' => 'root',
 			'driver' => 'mysqli',
-			'senha' => 'ce11ma31',
+			'senha' => '',
 			'porta' => '',
 			'banco' => 'provisionamento',
 			'charset' => 'utf-8'

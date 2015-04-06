@@ -1,0 +1,368 @@
+*{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+html{
+    min-height: 100%;
+}
+body {
+	background-color: #eee;
+}
+#tudo {
+	min-height:100%;
+	min-width:100%;
+}
+
+/* Conteúdo */
+#conteudo{
+	padding: 0px 30px 20px 30px;
+	min-height:100%;
+	height:100%;
+	width:100%;
+}
+
+.busca {
+	width:300px;
+}
+
+.header{
+    width: 100%;
+    background-color: white;
+    border-top: 10px #FFFFFF solid;
+    height: 70px;
+    box-shadow: #C8C8C8 0px 0px 3px;
+}
+.header #logotipo{
+    height: 50px;
+    float: left;
+    margin-left: 10px;
+}
+.header #separadorHeader{
+    width: 1px;
+    height: 35px;
+    background-color: #CCC;
+    border-radius: 35px;
+    margin-top: 7.5px;
+    margin-left: 15px;
+    float: left;
+}
+.header h1{
+    font-family: Ubuntu Light;
+    font-size: 25px;
+    font-weight: normal;
+    color:#009;
+    margin-left: 15px;
+    float: left;
+}
+.header #botaoMenu{
+    height: 35px;
+    width: 35px;
+    float: right;
+    margin-top: 7.25px;
+    margin-right: 15px;
+    cursor: pointer;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.header #botaoMenu.botaoAtivo{
+    background-color: #EEE;
+    border-radius: 5px 5px 0 0;
+}
+
+
+.formularioGeral .campo{
+    padding: 5px;
+}
+.formularioGeral label{
+    font-family: Calibri;
+    font-size: 15px;
+    color: #444;
+}
+.formularioGeral input{
+    background-color: white;
+    border: 1px solid #999;
+    font-family: Ubuntu;
+    font-size: 14px;
+    padding: 8px 5px;
+    border-radius: 5px;
+}
+.formularioGeral select{
+    background-color: white;
+    border: 1px solid #999;
+    font-family: Ubuntu;
+    font-size: 14px;
+    padding: 8px 5px;
+    border-radius: 5px;
+}
+.formularioGeral input#btEnviarMAC{
+    margin-left: 20px;
+    width: 210px;
+    height: 95px;
+    margin-top: 20px;
+    background-color: #333;
+    font-family: Ubuntu Light;
+    font-size: 17px;
+    line-height: 25px;
+    color: white;
+    cursor: pointer;
+    padding: 0;
+    border: none;
+    box-shadow: #333 0px 0px 2px;
+}
+.formularioGeral input#btEnviarMAC:hover{
+    background-color: #555;
+}
+/* Formulário de Cadastro da ONU */
+#formCadONU{
+    width: 912px;
+    height: 380px;
+    position: absolute;
+    z-index: 2000;
+    top: 50%;
+    left: 50%;
+    margin-left: -465px;
+    margin-top: -190px;
+    background-color: white;
+    box-shadow: #999 0px 0px 10px;
+    display: none;
+}
+#formCadONU h1, 
+#formCidade h1,
+#formTecnico h1{
+    background-color: #333;
+    color: white;
+    font-family: Ubuntu;
+    font-size: 14px;
+    padding-left: 10px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    font-weight: normal;
+}
+#formCadONU h1 img, 
+#formCidade h1 img,
+#formTecnico h1 img{
+    float: right;
+    margin-top: -4px;
+    margin-right: 5px;
+    height: 25px;
+    cursor: pointer;
+}
+#formCadONU h1 img:hover, 
+#formCidade h1 img:hover,
+#formTecnico h1 img:hover{
+    opacity: 0.8;
+}
+/* Formulário de Cadastro de Cidade */
+#formCidade{
+    width: 400px;
+    height: 150px;
+    background-color: white;
+    display: none;
+}
+input.btEnviar{
+    width: 100px;
+    height: 35px;
+    padding: 0;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    float: right;
+    margin-right: 25px;
+    margin-top: 10px;   
+    cursor: pointer;
+}
+input.btGravar{
+    width: 100px;
+    height: 35px;
+    padding: 0;
+    background-color: #333;
+    color: white;
+    border: none;
+	margin-right:30px;
+    border-radius: 5px;
+    float: left; 
+    cursor: pointer;
+}
+input.btEnviar:hover{
+    background-color: #555;
+}
+
+
+/* Formulário de Cadastro de Tecnico */
+#formTecnico{
+    width: 400px;
+    height: 230px;
+    display: none;
+}
+
+
+.botaoSpan{
+    width: 14px;
+    height: 14px;
+    padding: 0;
+    margin-bottom: -1.5px;
+}
+.botaoSpan:hover{
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+/* Gerais */
+.arruma{
+    clear: both;
+}
+.esquerda{
+    float: left;
+}
+.direita{
+    float: left;
+}
+
+/* Margens */
+.margemTop10{
+    margin-top: 10px;
+}
+.margemTop15{
+    margin-top: 15px;
+}
+.margemTop20{
+    margin-top: 20px;
+}
+.margemEsq20{
+    margin-left: 20px;
+}
+.margemEsq10{
+    margin-left: 10px;
+}
+
+/* Provisionamento */
+.botaoNovo{
+    margin-top: -40px;
+	cursor: pointer;
+    width: 90px;
+    height: 27px;
+    font-family: Ubuntu Light;
+    font-size: 13px;
+    line-height: 16px;
+    border: none;
+    border-radius: 5px;
+    color: #FFF;
+    text-shadow: 0px -1px 0px #333;
+    background-color: #006DCC;
+    background-image: linear-gradient(to bottom, #08C, #04C);
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    float: right;
+    transition-duration: 300ms;
+    box-shadow: #777 0px 0px 2px;
+}
+.botaoNovo:hover{
+    transition-duration: 300ms;
+    opacity: 0.8;
+}
+.formularioGeral .divConteudo{
+    padding: 10px;
+    background-color: #eee;
+}
+input.desativado{
+    background-color: #CCC;
+}
+.meio{
+    margin: 0 auto;
+    padding-top: 40px;
+}
+.meioTabela{
+    margin: 0 auto;
+    padding-top: 5px;
+}
+h2{
+    font-family: Ubuntu Light;
+    font-size: 14px;
+    color: #777;
+    border-bottom: 1px solid #DDD;
+    padding-bottom: 2px;
+}
+
+.rodape {
+	position: fixed;
+	bottom: 0;
+    background-color: #6FF;
+	z-index:3000;
+	width:100%;
+	}
+	
+.rodape h5{
+	padding-left:33px;
+}
+.rodape a {
+	text-decoration:none;
+	font-weight:normal;
+	color:inherit;
+}
+
+#campo_mac {text-transform: uppercase;}
+
+.meio h1, .meioTabela h1{
+    font-family: Ubuntu Light;
+    font-size: 22px;
+    color: #777;
+    border-bottom: 1px solid #DDD;
+    padding-bottom: 2px;
+}
+.meio h2, .meioTabela h2{
+    font-family: Ubuntu Light;
+    font-size: 17px;
+    color: #777;
+    border-bottom: 1px solid #DDD;
+    padding-bottom: 2px;
+}
+
+/* LISTA */
+.paginacao{
+    background-color: #AAA;
+    text-align: center;
+    padding: 5px 5px;
+    font-family: Ubuntu Light;
+    font-size: 13px;
+    color: white;
+}
+.paginacao a{
+    color: whitesmoke;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+}
+.paginacao a:hover{
+    text-decoration: underline;
+    text-decoration-color: #444;
+}
+/* Preloader */
+#preloader{
+    display: none;
+    text-align: center;
+    position: absolute;
+    z-index: 5000;
+    min-width: 100%;
+    min-height: 100%;
+    background-color: rgba(255,255,255,0.5);
+}
+#preloader img{
+    margin-top: 350px;
+}
+#preloader p{
+    margin-top: 5px;
+    color: #333;
+    font-family: Ubuntu;
+}
+table tr.linha:hover td{
+    cursor: pointer;
+	background-color:#CCC;
+}
+.float-dir {
+	float: right;
+	right:0px;
+	top:26px;
+	position:absolute;
+}

@@ -1,0 +1,21 @@
+192.168.7.163
+
+
+Basic Device Info
+
+Device Model: 	OT-4020VW
+Identification No.: 	FC8B97-FC8B9706E908
+Application: 	Fiber To The Home
+Hardware Version: 	CS014011050001.3
+Software Version: 	OVERTEK_V1.1.8
+Firmware Version: 	C230
+PON register status: 	MPCP Unregistered CTC Unauthenticated 
+
+
+
+172.16.16.253 ip onup
+
+Pw@FC8B9706E908
+
+
+[27/Mar/2015:10:47:41 -0300] "GET /fc8b9706e908.cfg HTTP/1.1" 200 42150 "-" "Wget" 

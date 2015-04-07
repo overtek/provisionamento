@@ -16,8 +16,7 @@ header("Content-Type: text/html; charset=ISO-8859-1",true);
 define("APP", dirname($_SERVER['DOCUMENT_ROOT']) . "/app/");
 # definir o diretório ROOT
 define("ROOT", $_SERVER['DOCUMENT_ROOT']);
-# definir a quantidade de registros por página
-define("REG_PAGINA", 20);
+
 
 /**
 * Inclui as bibliotecas do sistema
@@ -26,7 +25,7 @@ require_once APP.'biblioteca/request.php';
 require_once APP.'biblioteca/visao.php';
 require_once APP.'biblioteca/controle.php';
 require_once APP.'biblioteca/config.php';
-require_once APP.'biblioteca/banco.php';
+require_once APP.'biblioteca/ConexaoDB.php';
 
 
 $controle	= Request::get('controle');

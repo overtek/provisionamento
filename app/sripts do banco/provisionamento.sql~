@@ -36,9 +36,18 @@ CREATE TABLE `tbcidade` (
   UNIQUE KEY `uf_cidade_idx` (`idEstado`,`nomeCidade`),
   KEY `fk_table1_Estado_idx` (`idEstado`),
   CONSTRAINT `fk_table1_Estado` FOREIGN KEY (`idEstado`) REFERENCES `tbestado` (`idEstado`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `tbcidade`
+--
+
+LOCK TABLES `tbcidade` WRITE;
+/*!40000 ALTER TABLE `tbcidade` DISABLE KEYS */;
+INSERT INTO `tbcidade` VALUES (1,18,'Goioerê',1),(2,18,'Rancho Alegre do Oste',1),(4,18,'Moreira Sales',1),(5,18,'Janiópolis',1);
+/*!40000 ALTER TABLE `tbcidade` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `tbconfig`
@@ -55,9 +64,18 @@ CREATE TABLE `tbconfig` (
   `UserAgentPort` varchar(100) NOT NULL,
   `TelnetPassword` varchar(100) NOT NULL DEFAULT '0',
   PRIMARY KEY (`idConfig`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Configurações do Sistema';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COMMENT='Configurações do Sistema';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `tbconfig`
+--
+
+LOCK TABLES `tbconfig` WRITE;
+/*!40000 ALTER TABLE `tbconfig` DISABLE KEYS */;
+INSERT INTO `tbconfig` VALUES (1,'Overtek','sip.visaonet.com.br','sip.visaonet.com.br','8060','Overtek');
+/*!40000 ALTER TABLE `tbconfig` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `tbestado`
@@ -114,10 +132,18 @@ CREATE TABLE `tbonu` (
   KEY `fk_tbONU_tbCidade1_idx` (`idCidade`),
   CONSTRAINT `fk_tbONU_tbCidade1` FOREIGN KEY (`idCidade`) REFERENCES `tbcidade` (`idCidade`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_tbTelefonia_tbTecnico1` FOREIGN KEY (`idTecnico`) REFERENCES `tbtecnico` (`idTecnico`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `tbonu`
+--
 
+LOCK TABLES `tbonu` WRITE;
+/*!40000 ALTER TABLE `tbonu` DISABLE KEYS */;
+INSERT INTO `tbonu` VALUES (1,1,1,'FC:8B:97:06:E9:08','Célio Roberto',NULL,NULL,'44-3838-0000','38380000','','','celio.teste','celio',1,'2015-04-07 19:06:18'),(2,5,1,'S4:A5:AS:5S:D5:G5','José Carlos',NULL,NULL,'','','','','jose.silva','jose.silva',1,'2015-04-07 19:31:34'),(3,2,4,'A5:S2:F8:5G:2A:85','Vitor Beniveni',NULL,NULL,'44-3838-3838','38383838','38-6838-6868','66d6df6a','vitor.beniveni','vitor',1,'2015-04-07 19:08:16'),(4,2,1,'SD:5A:SD:5A:SA:SD','Lucas do Prado',NULL,NULL,'','','','','lucas.silva','lucas',1,'2015-04-07 19:11:01'),(5,1,2,'PL:AS:SK:EO:EJ:A5','Miranda Gonçalves',NULL,NULL,'','','','','miranda','miranda',1,'2015-04-07 19:13:45');
+/*!40000 ALTER TABLE `tbonu` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `tbtecnico`
@@ -134,7 +160,7 @@ CREATE TABLE `tbtecnico` (
   `criadoEm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `statusTecnico` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`idTecnico`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -143,7 +169,7 @@ CREATE TABLE `tbtecnico` (
 
 LOCK TABLES `tbtecnico` WRITE;
 /*!40000 ALTER TABLE `tbtecnico` DISABLE KEYS */;
-INSERT INTO `tbtecnico` VALUES (1,'admin@admin','2015overtek','Administrador','2015-04-06 18:31:00',1);
+INSERT INTO `tbtecnico` VALUES (1,'admin@admin','2015overtek','Administrador','2015-04-06 18:31:00',1),(2,'ti2@ispshop.com.br','celio','Célio Martins','2015-04-07 18:53:47',1),(3,'vitor@ispshop.com.br','vitor','Vitor Benivenis','2015-04-07 18:53:47',1),(5,'suporte@ispshop.com.br','cassio','Cássio Miranda','2015-04-07 18:54:21',1),(6,'ayron.alves@vn.com','ayron','Ayron','2015-04-07 19:19:35',1);
 /*!40000 ALTER TABLE `tbtecnico` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

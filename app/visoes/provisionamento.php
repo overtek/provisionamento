@@ -1,6 +1,6 @@
 <?php
 
-echo '<<GEPON ONU CONFIG FILE>>Digests:'.$dados[0]["versaoConfigONU"].'.101
+echo '<<GEPON ONU CONFIG FILE>>Digests:'.$dados[0]->versaoConfigONU.'.101
 <?xml version="1.0"?>
 <DslCpeConfig version="3.0">
   <InternetGatewayDevice>
@@ -25,13 +25,13 @@ echo '<<GEPON ONU CONFIG FILE>>Digests:'.$dados[0]["versaoConfigONU"].'.101
       <X_CT-COM_ServiceManage>
         <FtpEnable>TRUE</FtpEnable>
         <TelnetEnable>TRUE</TelnetEnable>
-        <TelnetPassword>' . $dados[0]["TelnetPassword"] . '</TelnetPassword>
+        <TelnetPassword>' . $dados[0]->TelnetPassword . '</TelnetPassword>
       </X_CT-COM_ServiceManage>
       <X_CT-COM_ALGAbility>
         <FTPEnable>TRUE</FTPEnable>
       </X_CT-COM_ALGAbility>
       <X_CT-COM_TeleComAccount>
-        <Password>Pw@'.preg_replace('(\:)', '', $dados[0]["macONU"]).'</Password>
+        <Password>Pw@'.preg_replace('(\:)', '', $dados[0]->macONU).'</Password>
       </X_CT-COM_TeleComAccount>
       <X_CT_COM_RemoteStatus>
         <StatusMessage>2</StatusMessage>
@@ -46,7 +46,7 @@ echo '<<GEPON ONU CONFIG FILE>>Digests:'.$dados[0]["versaoConfigONU"].'.101
       <RemoteLogLevel>Error</RemoteLogLevel>
     </X_BROADCOM_COM_SyslogCfg>
     <X_BROADCOM_COM_LoginCfg>
-      <UserPassword>Pw@'.preg_replace("(\:)", "", $dados[0]["macONU"]).'</UserPassword>
+      <UserPassword>Pw@'.preg_replace("(\:)", "", $dados[0]->macONU).'</UserPassword>
     </X_BROADCOM_COM_LoginCfg>
     <X_BROADCOM_COM_AppCfg>
       <Tr69cCfg>
@@ -406,7 +406,7 @@ echo '<<GEPON ONU CONFIG FILE>>Digests:'.$dados[0]["versaoConfigONU"].'.101
         <Name>wl0</Name>
         <MaxBitRate>54</MaxBitRate>
         <Channel>1</Channel>
-        <SSID>'. $dados[0]["SSID"] . substr($dados[0]["macONU"],12,2).substr($dados[0]["macONU"],15,2).'</SSID>
+        <SSID>'. $dados[0]->SSID . substr($dados[0]->macONU,12,2).substr($dados[0]->macONU,15,2).'</SSID>
         <BeaconType>11i</BeaconType>
         <Standard>n</Standard>
         <BasicEncryptionModes>None</BasicEncryptionModes>
@@ -440,7 +440,7 @@ echo '<<GEPON ONU CONFIG FILE>>Digests:'.$dados[0]["versaoConfigONU"].'.101
         </WEPKey>
         <WEPKey nextInstance="5" ></WEPKey>
         <PreSharedKey instance="1">
-          <PreSharedKey>'.preg_replace('(\:)', '', $dados[0]["macONU"]).'</PreSharedKey>
+          <PreSharedKey>'.preg_replace('(\:)', '', $dados[0]->macONU).'</PreSharedKey>
         </PreSharedKey>
         <PreSharedKey nextInstance="2" ></PreSharedKey>
         <WPS>
@@ -657,8 +657,8 @@ echo '<<GEPON ONU CONFIG FILE>>Digests:'.$dados[0]["versaoConfigONU"].'.101
           <NATEnabled>TRUE</NATEnabled>
           <X_BROADCOM_COM_FirewallEnabled>TRUE</X_BROADCOM_COM_FirewallEnabled>
           <X_BROADCOM_COM_IGMPEnabled>TRUE</X_BROADCOM_COM_IGMPEnabled>
-          <Username>'.$dados[0]["loginPPPoEONU"].'</Username>
-          <Password>'.base64_encode($dados[0]["senhaPPPoEONU"]."\0").'</Password>
+          <Username>'.$dados[0]->loginPPPoEONU.'</Username>
+          <Password>'.base64_encode($dados[0]->senhaPPPoEONU."\0").'</Password>
           <X_BROADCOM_COM_ConnectionId>1</X_BROADCOM_COM_ConnectionId>
           <X_BROADCOM_COM_IfName>ppp0.1</X_BROADCOM_COM_IfName>
           <DNSEnabled>TRUE</DNSEnabled>
@@ -715,20 +715,20 @@ echo '<<GEPON ONU CONFIG FILE>>Digests:'.$dados[0]["versaoConfigONU"].'.101
           <CallIdFskAppendChar>$</CallIdFskAppendChar>
           <VersionTime>20140724180153</VersionTime>
           <SIP>
-            <ProxyServer>' . $dados[0]["ProxyServer"] . '</ProxyServer>
-            <RegistrarServer>' . $dados[0]["RegistrarServer"] . '</RegistrarServer>
-            <UserAgentPort>' . $dados[0]["UserAgentPort"] . '</UserAgentPort>
+            <ProxyServer>' . $dados[0]->ProxyServer . '</ProxyServer>
+            <RegistrarServer>' . $dados[0]->RegistrarServer . '</RegistrarServer>
+            <UserAgentPort>' . $dados[0]->UserAgentPort . '</UserAgentPort>
             <RegisterExpires>1800</RegisterExpires>
           </SIP>
           <Line instance="1">';
           
-        if($dados[0]["numero1ONU"]){
+        if($dados[0]->numero1ONU){
             echo '          <Enable>Enabled</Enable>
-            <DirectoryNumber>55'.preg_replace('(\-)', '', $dados[0]["numero1ONU"]).'</DirectoryNumber>
+            <DirectoryNumber>55'.preg_replace('(\-)', '', $dados[0]->numero1ONU).'</DirectoryNumber>
             <SIP>
-              <AuthUserName>55'.preg_replace('(\-)', '', $dados[0]["numero1ONU"]).'</AuthUserName>
-              <AuthPassword>'.$dados[0]["controle1ONU"].'</AuthPassword>
-              <URI>55'.preg_replace('(\-)', '', $dados[0]["numero1ONU"]).'</URI>
+              <AuthUserName>55'.preg_replace('(\-)', '', $dados[0]->numero1ONU).'</AuthUserName>
+              <AuthPassword>'.$dados[0]->controle1ONU.'</AuthPassword>
+              <URI>55'.preg_replace('(\-)', '', $dados[0]->numero1ONU).'</URI>
             </SIP>';
         }
             
@@ -757,13 +757,13 @@ echo '<<GEPON ONU CONFIG FILE>>Digests:'.$dados[0]["versaoConfigONU"].'.101
           </Line>
           <Line instance="2">';
         
-        if($dados[0]["numero2ONU"]){            
+        if($dados[0]->numero2ONU){            
             echo '      <Enable>Enabled</Enable>
-            <DirectoryNumber>55'.preg_replace('(\-)', '', $dados[0]["numero2ONU"]).'</DirectoryNumber>
+            <DirectoryNumber>55'.preg_replace('(\-)', '', $dados[0]->numero2ONU).'</DirectoryNumber>
             <SIP>
-              <AuthUserName>55'.preg_replace('(\-)', '', $dados[0]["numero2ONU"]).'</AuthUserName>
-              <AuthPassword>'.$dados[0]["controle2ONU"].'</AuthPassword>
-              <URI>55'.preg_replace('(\-)', '', $dados[0]["numero2ONU"]).'</URI>
+              <AuthUserName>55'.preg_replace('(\-)', '', $dados[0]->numero2ONU).'</AuthUserName>
+              <AuthPassword>'.$dados[0]->controle2ONU.'</AuthPassword>
+              <URI>55'.preg_replace('(\-)', '', $dados[0]->numero2ONU).'</URI>
             </SIP>';
         }
         

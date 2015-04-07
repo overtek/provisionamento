@@ -1,13 +1,15 @@
 <?php
 
    #pegar os dados cadastrados passados, validar e enviar para o formulário.
-   
-   if (isset($dados[0]['SSID'])) $ssid = $dados[0]['SSID']; else $ssid = '';
-   if (isset($dados[0]['ProxyServer'])) $ProxyServer = $dados[0]['ProxyServer']; else $ProxyServer = '';
-   if (isset($dados[0]['RegistrarServer'])) $RegistrarServer = $dados[0]['RegistrarServer']; else $RegistrarServer = '';
-   if (isset($dados[0]['UserAgentPort'])) $UserAgentPort = $dados[0]['UserAgentPort']; else $UserAgentPort = '';
-   if (isset($dados[0]['TelnetPassword'])) $TelnetPassword = $dados[0]['TelnetPassword']; else $TelnetPassword = '';
-   if (isset($dados[0]['idConfig'])) $idConfig = $dados[0]['idConfig']; else $idConfig = '';
+   $dados = json_decode($dados);
+
+
+   if (isset($dados[0]->SSID)) $ssid = $dados[0]->SSID; else $ssid = '';
+   if (isset($dados[0]->ProxyServer)) $ProxyServer = $dados[0]->ProxyServer; else $ProxyServer = '';
+   if (isset($dados[0]->RegistrarServer)) $RegistrarServer = $dados[0]->RegistrarServer; else $RegistrarServer = '';
+   if (isset($dados[0]->UserAgentPort)) $UserAgentPort = $dados[0]->UserAgentPort; else $UserAgentPort = '';
+   if (isset($dados[0]->TelnetPassword)) $TelnetPassword = $dados[0]->TelnetPassword; else $TelnetPassword = '';
+   if (isset($dados[0]->idConfig)) $idConfig = $dados[0]->idConfig; else $idConfig = '';
 
 
    echo "<script type='text/javascript' src='visoes/js/sistema.js'></script>\n";

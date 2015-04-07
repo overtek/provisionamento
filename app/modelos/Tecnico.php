@@ -29,59 +29,63 @@ Class Tecnico {
      */    
     public function getLista($pagina) {
 		
-		$inicio = (REG_PAGINA * $pagina) - REG_PAGINA;
+        $inicio = (REG_PAGINA * $pagina) - REG_PAGINA;
 		
-        $query = "SELECT * FROM tbTecnico order by nomeTecnico LIMIT ".$inicio.", ".REG_PAGINA;
+        $query = "SELECT * FROM tbtecnico order by nomeTecnico LIMIT ".$inicio.", ".REG_PAGINA;
         
-		# criar conexão com o banco de dados
-		$db = DB::criar('padrao');
-		
-		# executa a query e guarda o resultado na variavel
-		$resultado = $db->query($query)->fetch_all(MYSQLI_ASSOC);
+        # criar conexão com o banco de dados
+        $db = new ConexaoDB();
+        $db->conecta();
+
+        # executa a query e guarda o resultado na variavel
+        $resultado = $db->selectDB($query);
+
+        $db->desconecta();
         
-		return $resultado;
+        return $resultado;
 	}	
     
     
     /**
-     * Método salva()
-     * Salva os dados de um técnico no DB
-     */
+    * Método salva()
+    * Salva os dados de um técnico no DB
+    */
     public function salva($post) {
 
-		if (isset($post['codTecnico']) and strlen($post['codTecnico']) > 0) 
-		{
-			$query = "UPDATE tbTecnico SET "
-				. "nomeTecnico = '" . $post['nomeTecnico'] . "', "
-				. "emailTecnico = '" . $post['emailTecnico'] . "', " 
-				. "senhaTecnico = '" . $post['senhaTecnico'] . "' " 
-				. "where idTecnico = ". $post['codTecnico'];
-		}
-		else
-		{
-			$query = "INSERT INTO tbTecnico (
-				nomeTecnico,
-				emailTecnico,
-				senhaTecnico,
-				statusTecnico) VALUES ('"
-					.$post['nomeTecnico']. "', '"
-					.$post['emailTecnico'] . "', '"
-					.$post['senhaTecnico'] . "', "
-					." 1
-				)";
-		}		
-		
-		# criar conexão com o banco de dados
-		$db = DB::criar('padrao');
-		
-		# executa a query e guarda o resultado na variavel
-		$resultado = $db->query($query);
+        if (isset($post['codTecnico']) and strlen($post['codTecnico']) > 0) 
+        {
+            $query = "UPDATE tbtecnico SET "
+                    . "nomeTecnico = '" . $post['nomeTecnico'] . "', "
+                    . "emailTecnico = '" . $post['emailTecnico'] . "', " 
+                    . "senhaTecnico = '" . $post['senhaTecnico'] . "' " 
+                    . "where idTecnico = ". $post['codTecnico'];
+        }
+        else
+        {
+            $query = "INSERT INTO tbtecnico (
+                    nomeTecnico,
+                    emailTecnico,
+                    senhaTecnico,
+                    statusTecnico) VALUES ('"
+                            .$post['nomeTecnico']. "', '"
+                            .$post['emailTecnico'] . "', '"
+                            .$post['senhaTecnico'] . "', "
+                            ." 1
+                    )";
+        }		
+
+        # criar conexão com o banco de dados
+        $db = new ConexaoDB();
+        $db->conecta();
+
+        # executa a query e guarda o resultado na variavel
+        $resultado = $db->updateDB($query);
 
         if($resultado){
             echo 'Técnico cadastrado com sucesso!';
         }
         else{
-            echo 'Falha ao cadastrar o técnico! - erro: ' . mysqli_error($db);
+            echo 'Falha ao cadastrar o técnico! - erro: ' . $resultado;
         }
     }
     
@@ -94,20 +98,23 @@ Class Tecnico {
      */
     public function getListaTecnicos() {		
 		
-        $query = "SELECT * FROM tbTecnico WHERE statusTecnico = 1 ORDER BY nomeTecnico";
+        $query = "SELECT * FROM tbtecnico WHERE statusTecnico = 1 ORDER BY nomeTecnico";
         
-		# criar conexão com o banco de dados
-		$db = DB::criar('padrao');
+        # criar conexão com o banco de dados
+        $db = new ConexaoDB();
+        $db->conecta();	
 		
-		# executa a query e guarda o resultado na variavel
-		$resultado = $db->query($query)->fetch_all(MYSQLI_ASSOC);
+        # executa a query e guarda o resultado na variavel
+        $resultado = $db->selectDB($query);
         
-		$tec = '';
+        $db->desconecta();
+
+        $tec = '';
         
         foreach ($resultado as $tecnico) {
-            $tec .= "  <option value='".$tecnico['idTecnico']."'>".$tecnico['nomeTecnico']."</option>\n";
+            $tec .= "  <option value='".$tecnico->idTecnico."'>".$tecnico->nomeTecnico."</option>\n";
         }
-		return $tec;
+        return $tec;
     }
 	
 	
@@ -115,19 +122,19 @@ Class Tecnico {
      * Método getTotalRegistros()
      * Retorna o total de registros cadastrados no banco de dados
      */	
-	public function getTotalRegistros(){
-		# criar conexão com o banco de dados
-		$db = DB::criar('padrao');
-		
-		# pegar a quantidade total dos registros para o paginamento
-		$query = "SELECT count(*) as tot from tbTecnico WHERE statusTecnico = 1";		
-		$resultado = $db->query($query);
-		$result = $resultado->fetch_all(MYSQLI_ASSOC);
-		$total_registros = $result[0]['tot'];		
-		$resultado->free();
-		
-		return $total_registros;
-	}	
+    public function getTotalRegistros(){
+        # criar conexão com o banco de dados
+        $db = new ConexaoDB();
+        $db->conecta();	
+
+        # pegar a quantidade total dos registros para o paginamento
+        $query = "SELECT * from tbtecnico WHERE statusTecnico = 1";		
+        $resultado = $db->contarDB($query);
+        
+        $db->desconecta();
+
+        return $resultado;
+    }	
 	
 	
     /**
@@ -136,15 +143,18 @@ Class Tecnico {
      */
     public function carrega($id) {
 		
-        $query = "SELECT * FROM tbTecnico WHERE idTecnico = $id";
+        $query = "SELECT * FROM tbtecnico WHERE idTecnico = $id";
         
-		# criar conexão com o banco de dados
-		$db = DB::criar('padrao');
-		
-		# executa a query e guarda o resultado na variavel
-		$resultado = $db->query($query)->fetch_all(MYSQLI_ASSOC);
+        # criar conexão com o banco de dados
+        $db = new ConexaoDB();
+        $db->conecta();
+
+        # executa a query e guarda o resultado na variavel
+        $resultado = $db->selectDB($query);
+
+        $db->desconecta();
         
-		echo json_encode($resultado);
+        echo json_encode($resultado);
     }
     
 	
@@ -155,28 +165,29 @@ Class Tecnico {
      */  
     public function deleta($id) {
 		
-		#validar ID e executar o método, caso contrário retorna erro
-		if (isset($id) and (strlen($id) > 0)) {
-			
-			$query = "DELETE from tbtecnico where idTecnico = $id";
-		
-			# criar conexão com o banco de dados
-			$db = DB::criar('padrao');
-			
-			# executa a query e guarda o resultado na variavel
-			$resultado = $db->query($query);
-	
-			if($resultado){
-				echo 'Técnico Excluído com sucesso!';
-			}
-			else{
-				echo 'Falha ao excluir o Técnico! erro='. mysqli_error($db);
-			}			
-		} else
-		{
-			echo "ID não Informado na ação";
-		}
-	}	
+        #validar ID e executar o método, caso contrário retorna erro
+        if (isset($id) and (strlen($id) > 0)) {
+
+        $query = "DELETE from tbtecnico where idTecnico = $id";
+
+        # criar conexão com o banco de dados
+        $db = new ConexaoDB();
+        $db->conecta();
+
+        # executa a query e guarda o resultado na variavel
+        $resultado = $db->deleteDB($query);
+
+        if($resultado){
+            echo 'Técnico Excluído com sucesso!';
+        }
+        else{
+            echo 'Falha ao excluir o Técnico! erro='. $resultado;
+        }			
+        } else
+        {
+            echo "ID não Informado na ação";
+        }
+    }	
     
     
     

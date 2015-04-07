@@ -15,7 +15,7 @@ Instalação:
 
 3° Editar o arquivo "Config.php" na pasta "app/biblioteca" e inserir as informações para conexão com o banco de dados Mysql.
 
-4° Criar o banco de dados, na pasta "app/sripts do banco" possui o script para criação do banco de dados e suas tabelas.
+4° Criar o banco de dados, na pasta "app/scripts do banco" possui o script para criação do banco de dados e suas tabelas.
 
 
 
@@ -31,6 +31,6 @@ Obs: este usuário poderá ser editado ou excluido após cadastrar novos técnicos.
 
 Passos após o acesso:
 
-Através do Menu/Configurações deverá ser cadastradas as informações de configuração do provedor para serem gravadas nos arquivos de provisionamento das ONUs.
+1° Através do Menu/Configurações deverá ser cadastradas as informações de configuração do provedor para serem gravadas nos arquivos de provisionamento das ONUs.
 
-Após estes passos o sistema estará apto para receber os cadastros dos clientes e gerar os arquivos de provisionamento.
+2° Após estes passos o sistema estará apto para receber os cadastros dos clientes e gerar os arquivos de provisionamento.

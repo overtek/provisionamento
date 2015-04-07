@@ -1,35 +1,25 @@
 <?php 
 
 
-class Config {
+/*
+ * Sistema de Documentação do Provedor
+ * Autor: Célio Martins
+ * Versão: 1.1
+ * 
+ */
 
-	/**
-	 * Um array de configuraÃ§Ãµes possibilita a 
-	 * criaÃ§Ã£o de modelos para mÃºltiplos bancos
-	 * de dados.
-	 */
-	public static $banco = array(
-		'padrao' => array(
-			'servidor' => 'localhost',
-			'usuario' => 'root',
-			'driver' => 'mysqli',
-			'senha' => '',
-			'porta' => '',
-			'banco' => 'provisionamento',
-			'charset' => 'utf-8'
-		),
 
-		'outro_banco' => array(
-			'servidor' => 'localhost',
-			'usuario' => 'root',
-			'driver' => 'postgre',
-			'senha' => '',
-			'porta' => '5432',
-			'banco' => 'dbmvc',
-			'charset' => 'utf-8'
-		)
-	);
+/*
+ * Definir configurações do sistema
+ */
 
-}
+# definir a quantidade de registros por página
+    define("REG_PAGINA", 20);
 
-?>
+# definir configurações de acesso ao banco de dados
+    define("DBTYPE", "mysql"); 
+    define("HOST", "localhost");
+    define("PORTA", "3306");
+    define("USERDB", "root");
+    define("SENHA", "");
+    define("BANCO", "provisionamento");

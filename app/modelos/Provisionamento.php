@@ -25,32 +25,31 @@ class Provisionamento {
      */
     public function getLista($pagina, $cliente) {
 		
-		# criar conexão com o banco de dados
-		$db = DB::criar('padrao');
+        # criar conexão com o banco de dados
+        $db = new ConexaoDB();
+        $db->conecta();
 			
         $inicio = (REG_PAGINA * $pagina) - REG_PAGINA;		
                 
-        $query = "SELECT * FROM tbONU o left join tbcidade c on c.idCidade = o.idCidade left join tbestado e on e.idEstado = c.idEstado
+        $query = "SELECT * FROM tbonu o left join tbcidade c on c.idCidade = o.idCidade left join tbestado e on e.idEstado = c.idEstado
 WHERE statusONU = 1";
 
-		if ($cliente != null) {
-			# remover os caracteres com acêntos
-			$from = "áàãâéêíóôõúüçÁÀÃÂÉÊÍÓÔÕÚÜÇ";
-			$to = "aaaaeeiooouucAAAAEEIOOOUUC";
-			$cliente = strtr($cliente, $from, $to);
-			$query .= " and nomeClienteONU like '%" . $cliente . "%'";
-		}
+        if ($cliente != null) {
+            # remover os caracteres com acêntos
+            $from = "áàãâéêíóôõúüçÁÀÃÂÉÊÍÓÔÕÚÜÇ";
+            $to = "aaaaeeiooouucAAAAEEIOOOUUC";
+            $cliente = strtr($cliente, $from, $to);
+            $query .= " and nomeClienteONU like '%" . $cliente . "%'";
+        }
 
-		$query .= " order by idONU LIMIT ".$inicio.", ".REG_PAGINA;
+        $query .= " order by idONU LIMIT ".$inicio.", ".REG_PAGINA;
 
-		# executa a query e guarda o resultado na variavel
-		$resultado = $db->query($query);
-
-    	$result = $resultado->fetch_all(MYSQLI_ASSOC);
+        # executa a query e guarda o resultado na variavel
+        $resultado = $db->selectDB($query);
 		
-    	$resultado->free();
+    	$db->desconecta();
 
-    	return $result;
+    	return $resultado;
         
     }
 	
@@ -59,26 +58,27 @@ WHERE statusONU = 1";
      * Retorna o total de registros cadastrados no banco de dados
      */	
 	public function getTotalRegistros($cliente){
-		# criar conexão com o banco de dados
-		$db = DB::criar('padrao');
+            
+            # criar conexão com o banco de dados
+            $db = new ConexaoDB();
+            $db->conecta();
 		
-		# pegar a quantidade total dos registros para o paginamento
-		$query = "SELECT count(*) as tot from tbONU WHERE statusONU = 1";
-		
-		if ($cliente != null) {
-			# remover os caracteres com acêntos
-			$from = "áàãâéêíóôõúüçÁÀÃÂÉÊÍÓÔÕÚÜÇ";
-			$to = "aaaaeeiooouucAAAAEEIOOOUUC";
-			$cliente = strtr($cliente, $from, $to);			
-			$query .= " and nomeClienteONU like '%" . $cliente . "%'";
-		}
+            # pegar a quantidade total dos registros para o paginamento
+            $query = "SELECT * from tbonu WHERE statusONU = 1";
 
-		$resultado = $db->query($query);
-		$result = $resultado->fetch_all(MYSQLI_ASSOC);
-		$total_registros = $result[0]['tot'];		
-		$resultado->free();
+            if ($cliente != null) {
+                # remover os caracteres com acêntos
+                $from = "áàãâéêíóôõúüçÁÀÃÂÉÊÍÓÔÕÚÜÇ";
+                $to = "aaaaeeiooouucAAAAEEIOOOUUC";
+                $cliente = strtr($cliente, $from, $to);			
+                $query .= " and nomeClienteONU like '%" . $cliente . "%'";
+            }
+
+            $resultado = $db->contarDB($query);
 		
-		return $total_registros;
+            $db->desconecta();
+
+            return $resultado;
 	}	
 	
 	
@@ -89,19 +89,18 @@ WHERE statusONU = 1";
      */
     public function getCadastro($id) {
                 
-        $query = "SELECT * FROM tbONU where idONU = $id";
+        $query = "SELECT * FROM tbonu where idONU = $id";
 
-		# criar conexão com o banco de dados
-		$db = DB::criar('padrao');
+        # criar conexão com o banco de dados
+        $db = new ConexaoDB();
+        $db->conecta();
 		
-		# executa a query e guarda o resultado na variavel
-		$resultado = $db->query($query);
+        # executa a query e guarda o resultado na variavel
+        $resultado = $db->selectDB($query);
 
-    	$result = $resultado->fetch_all(MYSQLI_ASSOC);
-		
-    	$resultado->free();
-
-    	return json_encode($result);
+        $db->desconecta();
+        
+    	return json_encode($resultado);
         
     }	
 	
@@ -114,29 +113,30 @@ WHERE statusONU = 1";
     public function setCadastro($onu) {
                 
         $query = "INSERT INTO tbonu (loginPPPoEONU, senhaPPPoEONU, numero1ONU, controle1ONU, numero2ONU, controle2ONU, macONU, nomeClienteONU, idTecnico, idCidade) VALUES ('"
-			. $onu['login']. "', '"
-			. $onu['senha']. "', '"
-			. $onu['numero1']. "', '"
-			. $onu['controle1']. "', '"
-			. $onu['numero2']. "', '"
-			. $onu['controle2']. "', '"
-			. strtoupper($onu['mac']). "', '"
-			. $onu['nome']. "', '"
-			. $onu['tecnico']. "', '"
-			. $onu['cidade']
-			. "')";
+            . $onu['login']. "', '"
+            . $onu['senha']. "', '"
+            . $onu['numero1']. "', '"
+            . $onu['controle1']. "', '"
+            . $onu['numero2']. "', '"
+            . $onu['controle2']. "', '"
+            . strtoupper($onu['mac']). "', '"
+            . $onu['nome']. "', '"
+            . $onu['tecnico']. "', '"
+            . $onu['cidade']
+            . "')";
 						
-		# criar conexão com o banco de dados
-		$db = DB::criar('padrao');
+        # criar conexão com o banco de dados
+        $db = new ConexaoDB();
+        $db->conecta();
 
-		# executa a query e guarda o resultado na variavel
-		$resultado = $db->query($query);		
+        # executa a query e guarda o resultado na variavel
+        $resultado = $db->insertDB($query);		
 
-    	if (!$resultado ) {
-			echo "Falha ao efetuar o Cadastro " .$resultado;
-		} else {
-			echo "Cadastro efetuado com Sucesso";
-		}
+    	if (!$resultado) {
+            echo "Falha ao efetuar o Cadastro ";
+        } else {
+            echo "Cadastro efetuado com Sucesso";
+        }
     }
 	
     /**
@@ -160,17 +160,18 @@ WHERE statusONU = 1";
 			. " where idONU = " . $onu['id'];
 			
 						
-		# criar conexão com o banco de dados
-		$db = DB::criar('padrao');
+        # criar conexão com o banco de dados
+        $db = new ConexaoDB();
+        $db->conecta();
 
-		# executa a query e guarda o resultado na variavel
-		$resultado = $db->query($query);		
+        # executa a query e guarda o resultado na variavel
+        $resultado = $db->updateDB($query);		
 
     	if (!$resultado ) {
-			echo "Falha ao efetuar a atualização do Cadastro " .$resultado;
-		} else {
-			echo "Cadastro atualizado com Sucesso";
-		}
+                echo "Falha ao efetuar a atualização do Cadastro " .$resultado;
+        } else {
+                echo "Cadastro atualizado com Sucesso";
+        }
     }
 	
 	
@@ -181,19 +182,18 @@ WHERE statusONU = 1";
      */
     public function getMac($mac) {
                 
-        $query = "SELECT * FROM tbONU, tbConfig where macONU = '$mac'";
+        $query = "SELECT * FROM tbonu, tbconfig where macONU = '$mac'";
 
-		# criar conexão com o banco de dados
-		$db = DB::criar('padrao');
+        # criar conexão com o banco de dados
+        $db = new ConexaoDB();
+        $db->conecta();
 
-		# executa a query e guarda o resultado na variavel
-		$resultado = $db->query($query);
+        # executa a query e guarda o resultado na variavel
+        $resultado = $db->selectDB($query);
 
-    	$result = $resultado->fetch_all(MYSQLI_ASSOC);
-		
-    	$resultado->free();
+        $db->desconecta();
 
-    	return $result;
+    	return $resultado;
         
     }
 	
@@ -205,27 +205,28 @@ WHERE statusONU = 1";
      */  
     public function deleta($id) {
 		
-		#validar ID e executar o método, caso contrário retorna erro
-		if (isset($id) and (strlen($id) > 0)) {
-			
-			$query = "DELETE from tbonu where idONU = $id";
-		
-			# criar conexão com o banco de dados
-			$db = DB::criar('padrao');
-			
-			# executa a query e guarda o resultado na variavel
-			$resultado = $db->query($query);
-	
-			if($resultado){
-				echo 'Cliente Excluído com sucesso!';
-			}
-			else{
-				echo 'Falha ao excluir o Cliente! erro='. mysqli_error($db);
-			}			
-		} else
-		{
-			echo "ID não Informado na ação";
-		}
+        #validar ID e executar o método, caso contrário retorna erro
+        if (isset($id) and (strlen($id) > 0)) {
+
+        $query = "DELETE from tbonu where idONU = $id";
+
+        # criar conexão com o banco de dados
+        $db = new ConexaoDB();
+        $db->conecta();
+
+        # executa a query e guarda o resultado na variavel
+        $resultado = $db->deleteDB($query);
+
+        if($resultado){
+            echo 'Cliente Excluído com sucesso!';
+        }
+        else{
+            echo 'Falha ao excluir o Cliente! erro='. mysqli_error($db);
+        }			
+        } else
+        {
+            echo "ID não Informado na ação";
+        }
 	}	
 	
 }

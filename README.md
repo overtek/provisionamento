@@ -17,6 +17,8 @@ Instalação:
 
 4° Criar o banco de dados, na pasta "app/scripts do banco" possui o script para criação do banco de dados e suas tabelas.
 
+5° Dependendo do servidor será necessário dar permissão de acesso a todas as pastas e sub-pastas do sistema.
+
 
 
 Acesso ao sistema:
@@ -34,3 +36,7 @@ Passos após o acesso:
 1° Através do Menu/Configurações deverá ser cadastradas as informações de configuração do provedor para serem gravadas nos arquivos de provisionamento das ONUs.
 
 2° Após estes passos o sistema estará apto para receber os cadastros dos clientes e gerar os arquivos de provisionamento.
+
+
+
+Contato: ti2@ispshop.com.br

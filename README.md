@@ -36,7 +36,3 @@ Passos após o acesso:
 1° Através do Menu/Configurações deverá ser cadastradas as informações de configuração do provedor para serem gravadas nos arquivos de provisionamento das ONUs.
 
 2° Após estes passos o sistema estará apto para receber os cadastros dos clientes e gerar os arquivos de provisionamento.
-
-
-
-Contato: ti2@ispshop.com.br

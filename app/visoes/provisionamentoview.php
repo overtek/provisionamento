@@ -17,10 +17,10 @@
  */
 
 $pagina = new ProvisionamentoView();
-$render = $pagina->getPagina($lista_cidades, $lista_tecnicos, $lista_estados, $cliente);
+$render = $pagina->getPagina($lista_cidades, $lista_tecnicos, $lista_todostecnicos, $lista_estados, $cliente);
 
 switch ($acao) {
-    case "getTabela" : $render .= $pagina->getTabela($lista, $registros, $pag_request);
+    case "getTabela" : $render .= $pagina->getTabela($lista, $registros, $pag_request, $tecnico);
 }
 
 return $render;
@@ -32,7 +32,7 @@ class ProvisionamentoView {
      * Abre a página de cadastro de Provisionamento, Cadastro de Técnicos e Cadastro de Cidades
      */
     
-    public function getPagina($lista_cidades, $lista_tecnicos, $lista_estados, $cliente){
+    public function getPagina($lista_cidades, $lista_tecnicos, $lista_todostecnicos, $lista_estados, $cliente ){
 		
         echo " <div id='conteudo'>\n";
         echo "  <div class='meioTabela'>\n";
@@ -45,7 +45,11 @@ class ProvisionamentoView {
         echo "			<span class='input-group-btn'>\n";
         echo "				<button class='btn btn-default' onClick='buscar_cliente()' type='button'>Ok</button>\n";
         echo "			</span>\n";
-        echo "		</div>\n";		
+        echo "                  <select class='form-control' id='clientes_por_tecnico' onChange='clientes_por_tecnico(this.value)'>\n";
+        echo "                      <option value=''>Exibir clientes por técnico</option>\n";
+        echo utf8_decode($lista_todostecnicos);
+        echo "                  </select>\n";        
+        echo "		</div>\n";
         echo "  </div>\n";
         
         echo "  <div id='formCadONU'>\n";
@@ -178,7 +182,7 @@ class ProvisionamentoView {
      * @param type $ONUs
      */
 	 
-    public function getTabela($ONUs, $registros, $pag_request) {
+    public function getTabela($ONUs, $registros, $pag_request, $tecnico) {
 
         echo "  <table class='table table-striped table-condensed table-hover'>\n";
         echo "      <tr class='titulo'>\n";
@@ -223,6 +227,7 @@ class ProvisionamentoView {
         echo "  </table>\n";
         
         echo "  <script>$('.toltip').jBox('Tooltip', {});</script>\n";
+        if ($tecnico != null) echo "<script>$('#clientes_por_tecnico').val($tecnico)</script>";
 
         /*
         * GERAR PAGINAÇÃO DOS REGISTROS PARA EXIBIÇÃO NA PÁGINA

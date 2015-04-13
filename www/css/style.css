@@ -23,7 +23,10 @@ body {
 }
 
 .busca {
-    width:300px;
+    width:600px;
+}
+.busca select {
+    width: 300px;
 }
 
 .header{

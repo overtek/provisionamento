@@ -13,6 +13,12 @@ function gravarONU() {
         url: "index.php?controle=Provisionamento&acao=cadastra",
         type: 'POST',
         data: $('#cadastroTelefonia').serialize(),
+        beforeSend: function(){
+            if ($('select[name=tecnico]').val() == null) {
+                alert('Selecione um novo técnico para este cliente');
+                return false;
+            }
+        },
         success: function (result) {
             alert(result);
             $('#conteudo').append(result);
@@ -125,6 +131,14 @@ function buscar_cliente() {
     }
 }
 
+function clientes_por_tecnico(id){
+    $('#busca_cliente').empty();
+    if (id.length > 0) {
+        window.location = "?controle=Provisionamento&acao=carregaTabela&tecnico=" + id;
+    }else
+        window.location = "index.php";
+}
+
 
 /*
  * Funções da tela de cadastro de Técnicos -----------------------------
@@ -133,6 +147,7 @@ function buscar_cliente() {
 function cadastro_tecnico() {
     limparforms('formTecnico');
     $('input[name=senhaTecnico]').attr("type", "text");
+    $('#st1').attr('checked','checked');
     cadtecnico = new jBox('Modal', {
         width: 422,
         height: 275,
@@ -150,7 +165,11 @@ function editarTecnico(id) {
             $('input[name=nomeTecnico]').val(array[i].nomeTecnico);
             $('input[name=senhaTecnico]').attr("type", "password");
             $('input[name=senhaTecnico]').val(array[i].senhaTecnico);
+            status = array[i].statusTecnico;
             $('input[name=emailTecnico]').val(array[i].emailTecnico);
+        }
+        if (parseInt(status) == 0) {
+            $('#st0').attr('checked','checked');
         }
         cadtecnico = new jBox('Modal', {
             width: 422,
@@ -213,6 +232,12 @@ function gravar_Tecnico() {
     });
 }
 
+
+function show_tecnico(status){
+    window.location = "?controle=Tecnicos&acao=paginaTecnicos&status="+status;
+}
+
+
 function excluir_Tecnico(id) {
     var tec = $("#" + id).html();
     new jBox('Confirm', {
@@ -223,17 +248,36 @@ function excluir_Tecnico(id) {
         confirm: function () {
             $.ajax({
                 url: "index.php?controle=Tecnicos&acao=deletaTecnico&id=" + id,
-                success: function (result) {
-                    alert(result);
-                    location.reload();
+                success: function (result) {                    
+                    switch(parseInt(result)) {
+                        case 0 :
+                            if (confirm('Atenção!!\nImpossível excluir este técnico, está associado a clientes\nDeseja Inativá-lo?')) {
+                                $.ajax({
+                                    url: "index.php?controle=Tecnicos&acao=inativarTecnico&id=" + id,
+                                    success: function (msg){
+                                        alert($msg);
+                                        location.reload();
+                                    }
+                                });
+                            };
+                            location.reload();
+                            break;
+                        case 1 : alert("Técnico Excluído com sucesso!"); location.reload();
+                            break;
+                        case 2 : alert("Falha ao excluir o Técnico!"); location.reload();
+                            break;
+                        case 3 : alert("ID do técnico não Informado na ação!"); location.reload();
+                            break;
+                    }
                 },
                 error: function (result) {
                     Alert('Falha na execução ' + result);
                 }
             });
         }
-    }).open();
+    }).open();       
 }
+
 
 /*
  * Fim das Funções da tela de cadastro de Técnicos ---------------------
@@ -241,7 +285,7 @@ function excluir_Tecnico(id) {
 
 
 /*
- * FunÃ§Ãµes da tela de cadastro de Cidades ------------------------------
+ * Funções da tela de cadastro de Cidades ------------------------------
  */
 
 function cadastro_cidade() {
@@ -355,7 +399,7 @@ function excluir_cidade(id) {
 }
 
 /*
- * Fim das funÃ§Ãµes do cadastro de cidades--------------------------------------------------------
+ * Fim das funções do cadastro de cidades--------------------------------------------------------
  */
 
 

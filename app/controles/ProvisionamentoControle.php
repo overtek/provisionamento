@@ -32,7 +32,7 @@ class ProvisionamentoControle extends Controle {
      * @parametro $pagina = página a ser exibida / paginação da tabela com mais de 20 registros
      * @parametro $cliente = Cliente a ser retornado na busca
      */
-    public function carregaTabela($pagina = 1, $cliente = null) {
+    public function carregaTabela($pagina = 1, $cliente = null, $tecnico=null) {
 
         # Verifica se foi passado a página por parametro e redefine a variável $página.
         if ((isset($_GET["pag"])) and ( strlen($_GET["pag"]) > 0)) {
@@ -49,15 +49,24 @@ class ProvisionamentoControle extends Controle {
             $this->visao->render('Pagina/header');
             $this->visao->render('Pagina/footer');
         }
+        
+        # Verifica se foi passado a busca por técnico por parametro e redefine a variável $cliente.
+        if ((isset($_GET["tecnico"])) and ( strlen($_GET["tecnico"]) > 0)) {
+            $tecnico = $_GET["tecnico"];
+            $this->visao->render('Pagina/head');
+            $this->visao->render('Pagina/header');
+            $this->visao->render('Pagina/footer');
+        }        
+        
 
         # carrega o modelo Provisionamento
         $this->modelo('Provisionamento');
 
         # Chama o método getLista para trazer os resultados
-        $lista = $this->Provisionamento->getLista($pagina, $cliente);
+        $lista = $this->Provisionamento->getLista($pagina, $cliente, $tecnico);
 
         # Chama o método getTotalRegistros para trazer a quantidade total dos registros
-        $registros = $this->Provisionamento->getTotalRegistros($cliente);
+        $registros = $this->Provisionamento->getTotalRegistros($cliente, $tecnico);
 
         # uso o método set para vincular a variável registros dentro da view
         $this->visao->set('registros', $registros);
@@ -67,6 +76,9 @@ class ProvisionamentoControle extends Controle {
 
         # uso o método set para vincular a variável pag_request dentro da view
         $this->visao->set('cliente', $cliente);
+        
+        # uso o método set para vincular a variável tecnico dentro da view
+        $this->visao->set('tecnico', $tecnico);        
 
         # uso o método set para vincular a variável lista dentro da view
         $this->visao->set('lista', $lista);
@@ -94,9 +106,15 @@ class ProvisionamentoControle extends Controle {
 
         # Chama o método getListaTecnicos para trazer a lista de técnicos cadastrados
         $lista_tecnicos = $this->Tecnico->getListaTecnicos();
+        
+        # uso o método set para vincular a variável lista_tecnicos dentro da view
+        $this->visao->set('lista_tecnicos', $lista_tecnicos);        
+        
+        # Chama o método getListaTodosTecnicos para trazer a lista de técnicos cadastrados
+        $lista_todostecnicos = $this->Tecnico->getListaTodosTecnicos();        
 
         # uso o método set para vincular a variável lista_tecnicos dentro da view
-        $this->visao->set('lista_tecnicos', $lista_tecnicos);
+        $this->visao->set('lista_todostecnicos', $lista_todostecnicos); 
 
         # renderiza a view
         $this->visao->render('provisionamentoview');

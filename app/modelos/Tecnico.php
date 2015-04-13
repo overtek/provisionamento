@@ -27,11 +27,11 @@ Class Tecnico {
      * Método getLista()
      * Carrega a listagem dos técnicos cadastrados.
      */    
-    public function getLista($pagina) {
+    public function getLista($pagina, $status) {
 		
         $inicio = (REG_PAGINA * $pagina) - REG_PAGINA;
 		
-        $query = "SELECT * FROM tbtecnico order by nomeTecnico LIMIT ".$inicio.", ".REG_PAGINA;
+        $query = "SELECT * FROM tbtecnico where statusTecnico = $status order by nomeTecnico LIMIT ".$inicio.", ".REG_PAGINA;
         
         # criar conexão com o banco de dados
         $db = new ConexaoDB();
@@ -57,7 +57,8 @@ Class Tecnico {
             $query = "UPDATE tbtecnico SET "
                     . "nomeTecnico = '" . $post['nomeTecnico'] . "', "
                     . "emailTecnico = '" . $post['emailTecnico'] . "', " 
-                    . "senhaTecnico = '" . $post['senhaTecnico'] . "' " 
+                    . "senhaTecnico = '" . $post['senhaTecnico'] . "', "
+                    . "statusTecnico = '" . $post['statusTecnico'] . "' "
                     . "where idTecnico = ". $post['codTecnico'];
         }
         else
@@ -70,8 +71,8 @@ Class Tecnico {
                             .$post['nomeTecnico']. "', '"
                             .$post['emailTecnico'] . "', '"
                             .$post['senhaTecnico'] . "', "
-                            ." 1
-                    )";
+                            .$post['statusTecnico']
+                    .")";
         }		
 
         # criar conexão com o banco de dados
@@ -94,7 +95,7 @@ Class Tecnico {
     
     /**
      * Método lista()
-     * Lista os técnicos cadastrados no DB
+     * Lista os técnicos cadastrados e ativos no DB
      */
     public function getListaTecnicos() {		
 		
@@ -116,19 +117,48 @@ Class Tecnico {
         }
         return $tec;
     }
+    
+    
+    /**
+     * Método lista()
+     * Lista os técnicos cadastrados no DB
+     */
+    public function getListaTodosTecnicos() {		
+		
+        $query = "SELECT * FROM tbtecnico ORDER BY nomeTecnico";
+        
+        # criar conexão com o banco de dados
+        $db = new ConexaoDB();
+        $db->conecta();	
+		
+        # executa a query e guarda o resultado na variavel
+        $resultado = $db->selectDB($query);
+        
+        $db->desconecta();
+
+        $tec = '';
+        
+        foreach ($resultado as $tecnico) {
+            if ($tecnico->statusTecnico == 1) {
+                $tec .= "  <option value='".$tecnico->idTecnico."'>".$tecnico->nomeTecnico." - Ativo</option>\n";
+            } else
+                $tec .= "  <option value='".$tecnico->idTecnico."'>".$tecnico->nomeTecnico." - Inativo</option>\n";
+        }
+        return $tec;
+    }    
 	
 	
     /**
      * Método getTotalRegistros()
      * Retorna o total de registros cadastrados no banco de dados
      */	
-    public function getTotalRegistros(){
+    public function getTotalRegistros($status){
         # criar conexão com o banco de dados
         $db = new ConexaoDB();
         $db->conecta();	
 
         # pegar a quantidade total dos registros para o paginamento
-        $query = "SELECT * from tbtecnico WHERE statusTecnico = 1";		
+        $query = "SELECT * from tbtecnico WHERE statusTecnico = $status";		
         $resultado = $db->contarDB($query);
         
         $db->desconecta();
@@ -158,36 +188,76 @@ Class Tecnico {
     }
     
 	
-	 /**
-     * Método deleta()
-     * Excluir um técnico cadastrado.
-	 * @param: int $id código do técnico
-     */  
+    /**
+    * Método deleta()
+    * Excluir um técnico cadastrado.
+    * @param: int $id código do técnico
+    */  
     public function deleta($id) {
-		
+        
+        $msg = array();
+        
         #validar ID e executar o método, caso contrário retorna erro
         if (isset($id) and (strlen($id) > 0)) {
+            
+            # criar conexão com o banco de dados
+            $db = new ConexaoDB();
+            $db->conecta();            
+            
+            # Checar se o Técnico está associado a algum cliente            
+            $query = "select * from tbonu where idtecnico = $id";
+            $registro = $db->contarDB($query);
+            
+            if ($registro > 0) {
+                $status = 0;
+            } else {
+                
+                $query = "DELETE from tbtecnico where idtecnico = $id";
 
-        $query = "DELETE from tbtecnico where idTecnico = $id";
+                # executa a query e guarda o resultado na variavel
+                $resultado = $db->deleteDB($query);
 
+                if($resultado){
+                    $status = 1;
+                }
+                else
+                {
+                    $status = 2;
+                }
+            }
+        } else
+        {
+            $status = 3;
+        }
+        return $status;
+    }
+    
+    
+    /**
+     * Método contaClientes()
+     * Conta os clientes associados à determinado técnico
+     */
+    public function inativarTecnico($id) {
+		
+        $query = "UPDATE tbtecnico set statusTecnico = 0 WHERE idTecnico = $id";
+        
         # criar conexão com o banco de dados
         $db = new ConexaoDB();
         $db->conecta();
 
         # executa a query e guarda o resultado na variavel
-        $resultado = $db->deleteDB($query);
+        $resultado = $db->updateDB($query);
 
-        if($resultado){
-            echo 'Técnico Excluído com sucesso!';
+        $db->desconecta();
+        
+        if (!$resultado) {
+            $msg = "Tecnico inativado com sucesso.";
+        } else {
+            $msg = "Falha ao inativar este técnico." . $resultado;
         }
-        else{
-            echo 'Falha ao excluir o Técnico! erro='. $resultado;
-        }			
-        } else
-        {
-            echo "ID não Informado na ação";
-        }
-    }	
+        
+        echo $resultado;
+    }
     
     
     

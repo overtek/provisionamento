@@ -10,7 +10,7 @@
 # gera os métodos e cria a página.
 
 $pagina  = new TecnicoView();
-$render  = $pagina->getPagina();
+$render  = $pagina->getPagina($status);
 $render .= $pagina->getForm();
 $render .= $pagina->getTabela($lista, $registros, $pag_request);
 return $render;
@@ -23,7 +23,7 @@ class TecnicoView {
     * Método getPagina()
     * Retorna o cabeçalho da página
     */	
-    public function getPagina(){
+    public function getPagina($status){
         echo " <div id='conteudo'>\n";
         echo "  <div class='meioTabela'>\n";
         echo "      <h1>\n";
@@ -31,6 +31,13 @@ class TecnicoView {
         echo "      </h1>\n";
         echo "      <input type='button' value='Novo' onClick='cadastro_tecnico()' class='botaoNovo'>\n";      
         echo "  </div>\n";
+        echo " <select class='form-control' style='width:200px' onchange='show_tecnico(this.value)'>\n";        
+        echo " <option value='1'>Status = Ativo</option>\n";
+        if ($status == '0') {
+            echo " <option value='0' selected>Status = Inativo</option>\n";
+        } else
+            echo " <option value='0'>Status = Inativo</option>\n";
+        echo " </select>\n";
     }
 	
 	
@@ -141,10 +148,16 @@ class TecnicoView {
         echo "                  <input type='text' name='senhaTecnico' required style='width: 110px'><br />\n";
         echo "              </div>\n";
 
-        echo "				<input type='hidden' id='codTecnico' name='codTecnico'>\n";	
+        echo "				<input type='hidden' id='codTecnico' name='codTecnico'>\n";
+        
+        echo "              <div class='esquerda margemTop15 margemEsq10'>\n";
+        echo "                  <label>Ativo</label><br />\n";
+        echo "                  <input type='radio' id='st1' value='1' name='statusTecnico' checked='checked'> Sim\n";
+        echo "                  <input type='radio' id='st0' value='0' name='statusTecnico'> Não\n";
+        echo "              </div><br>\n";
 		
-        echo "              <input type='submit' value='Salvar' id='salvaTecnico' onClick='Formgravar_Tecnico()' class='btEnviar margemTop15'/>";
-        echo "              <input type='button' value='Cancelar' onClick='cadtecnico.close()' class='btEnviar margemTop15'/>";
+        echo "              <input type='submit' value='Salvar' id='salvaTecnico' onClick='Formgravar_Tecnico()' class='btEnviar margemTop20'/>";
+        echo "              <input type='button' value='Cancelar' onClick='cadtecnico.close()' class='btEnviar margemTop20'/>";
         echo "          </form>\n";		
     }
 	

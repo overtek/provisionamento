@@ -23,7 +23,7 @@ class Provisionamento {
      * Retorna os objetos com os dados cadastrados no banco de dados
      * @param int $pagina Número da página a ser carregada
      */
-    public function getLista($pagina, $cliente) {
+    public function getLista($pagina, $cliente, $tecnico) {
 		
         # criar conexão com o banco de dados
         $db = new ConexaoDB();
@@ -41,6 +41,10 @@ WHERE statusONU = 1";
             $cliente = strtr($cliente, $from, $to);
             $query .= " and nomeClienteONU like '%" . $cliente . "%'";
         }
+        
+        if ($tecnico != null) {
+            $query .= " and idTecnico = ".$tecnico;
+        }
 
         $query .= " order by idONU LIMIT ".$inicio.", ".REG_PAGINA;
 
@@ -57,7 +61,7 @@ WHERE statusONU = 1";
      * Método getTotalRegistros()
      * Retorna o total de registros cadastrados no banco de dados
      */	
-	public function getTotalRegistros($cliente){
+	public function getTotalRegistros($cliente, $tecnico){
             
             # criar conexão com o banco de dados
             $db = new ConexaoDB();
@@ -72,6 +76,10 @@ WHERE statusONU = 1";
                 $to = "aaaaeeiooouucAAAAEEIOOOUUC";
                 $cliente = strtr($cliente, $from, $to);			
                 $query .= " and nomeClienteONU like '%" . $cliente . "%'";
+            }
+            
+            if ($tecnico != null) {
+                $query .= " and idTecnico = ".$tecnico;
             }
 
             $resultado = $db->contarDB($query);

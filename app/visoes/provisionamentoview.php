@@ -53,7 +53,7 @@ class ProvisionamentoView {
         echo "  </div>\n";
         
         echo "  <div id='formCadONU'>\n";
-        echo "      <form method='post' action='' onSubmit='return false' class='formularioGeral' id='cadastroTelefonia'>\n";
+        echo "      <form method='post' action='' onSubmit='return false' class='formularioGeral' name='cadastroTelefonia' id='cadastroTelefonia'>\n";
         echo "          <div class='esquerda divConteudo margemEsq20'>\n"; 
         echo "              <h2>PPPoE</h2>\n";
         echo "              <div class='campo margemTop10'>\n";
@@ -260,5 +260,5 @@ class ProvisionamentoView {
         }
         echo " </div>\n";
     }
-    
+
 }

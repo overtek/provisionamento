@@ -9,24 +9,26 @@
 
 
 function gravarONU() {
-    $.ajax({
-        url: "index.php?controle=Provisionamento&acao=cadastra",
-        type: 'POST',
-        data: $('#cadastroTelefonia').serialize(),
-        beforeSend: function(){
-            if ($('select[name=tecnico]').val() == null) {
-                alert('Selecione um novo técnico para este cliente');
-                return false;
+    if (valida_form('cadastroTelefonia')) {
+        $.ajax({
+            url: "index.php?controle=Provisionamento&acao=cadastra",
+            type: 'POST',
+            data: $('#cadastroTelefonia').serialize(),
+            beforeSend: function(){
+                if ($('select[name=tecnico]').val() == null) {
+                    alert('Selecione um novo técnico para este cliente');
+                    return false;
+                }
+            },
+            success: function (result) {
+                alert(result);
+                $('#conteudo').append(result);
+                location.reload();
             }
-        },
-        success: function (result) {
-            alert(result);
-            $('#conteudo').append(result);
-            location.reload();
-        }
-    });
+        });
+    }
 }
-;
+
 
 
 function abrirCadastro() {
@@ -416,6 +418,22 @@ function limparforms(form) {
     });
 
 }
+
+function valida_form(form) {
+    var i = 0;
+    $('#' + form).find('input').each(function () {
+        if ( ($(this).attr('required') == 'required') && ( $(this).val().length < 1) ) {
+            alert('Por favor, preencha todos os campos corretamente!\n');
+            i++;
+            return false;
+        }
+    });
+    if (i < 1) {
+        return true;
+    } else
+        return false;
+}
+
 
 $(function(){
     $("#busca_cliente").keyup(function (e) {

@@ -49,7 +49,7 @@ class ProvisionamentoView {
         echo "                      <option value=''>Exibir clientes por técnico</option>\n";
         echo utf8_decode($lista_todostecnicos);
         echo "                  </select>\n";        
-        echo "		</div>\n";
+        echo "		</div><br>\n";
         echo "  </div>\n";
         
         echo "  <div id='formCadONU'>\n";
@@ -184,7 +184,7 @@ class ProvisionamentoView {
 	 
     public function getTabela($ONUs, $registros, $pag_request, $tecnico) {
 
-        echo "  <table class='table table-striped table-condensed table-hover'>\n";
+        echo "  <table class='table table-striped table-condensed table-bordered table-hover'>\n";
         echo "      <tr class='titulo'>\n";
         echo "          <th width='5%'>C&oacute;digo</th>\n";
         echo "          <th width='20%'>Nome do Cliente</th>\n";
@@ -194,7 +194,7 @@ class ProvisionamentoView {
         echo "          <th width='10%'>Telefone 2</th>\n";
         echo "          <th width='15%'>Cidade</th>\n";
         echo "          <th width='15%'>Adicionado</th>\n";
-        echo "          <th width='60px' colspan='2'>A&ccedil;&otilde;es</th>\n";
+        echo "          <th width='40px' class='central' colspan='2'>A&ccedil;&otilde;es</th>\n";
         echo "      </tr>\n";
 		
         # define a contagem inicial dos registros
@@ -211,11 +211,11 @@ class ProvisionamentoView {
             echo "          <td width='10%'>".$onu->numero2ONU."</td>\n";
             echo "          <td width='15%'>".utf8_decode($onu->nomeCidade). "/" . $onu->nomeEstado ."</td>\n";
             echo "          <td width='15%'>".$onu->criadoEm."</td>\n";
-            echo "          <td width='30px'>\n";
+            echo "          <td class='central' width='20px'>\n";
             echo "				<button class='btn btn-default btn-xs toltip' title='Clique para Editar' onclick='editarCadastro(".$onu->idONU.")'>\n";
             echo "					<span class='glyphicon glyphicon-pencil'></span>\n";
             echo "				</button></td>\n";
-            echo "          <td width='30px'>\n";
+            echo "          <td class='central' width='20px'>\n";
             echo "				<button class='btn btn-default btn-xs toltip' title='Clique para Excluir' onclick='excluir_cliente(".$onu->idONU.")'>\n";
             echo "					<span class='glyphicon glyphicon-remove'></span>\n";
             echo "				</button></td>\n";			

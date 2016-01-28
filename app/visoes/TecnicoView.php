@@ -37,7 +37,7 @@ class TecnicoView {
             echo " <option value='0' selected>Status = Inativo</option>\n";
         } else
             echo " <option value='0'>Status = Inativo</option>\n";
-        echo " </select>\n";
+        echo " </select><br>\n";
     }
 	
 	
@@ -51,7 +51,7 @@ class TecnicoView {
 
     function getTabela($dados, $registros, $pag_request) {
 
-        echo "  <table class='table table-striped table-condensed table-hover' style='width:700px'>\n";
+        echo "  <table class='table table-striped table-condensed table-bordered table-hover' style='width:700px'>\n";
         echo "      <tr class='titulo'>\n";
         echo "          <th width='5%'>C&oacute;digo</th>\n";
         echo "          <th>Nome</th>\n";

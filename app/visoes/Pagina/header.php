@@ -1,7 +1,9 @@
 <?php
 
 	echo "  <div class='header'>\n";
-	echo "      <img src='img/logotipo.png' alt='' title='Menu' id='logotipo'/>\n";
+	echo "		<a href='http://www.overtek.com.br' target='_blank'>\n";
+	echo "      	<img src='img/logotipo.png' alt='' title='Menu' id='logotipo'/>\n";
+	echo "		</a>\n";
 	echo "      <div id='separadorHeader'></div>\n";
 	echo "      <h1>Sistema de Provisionamento</h1>\n";
 	echo "		<div class='btn-group float-dir responsive'>\n";

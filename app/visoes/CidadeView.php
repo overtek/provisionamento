@@ -44,7 +44,7 @@ class CidadeView {
 		
 	function getTabela($dados, $registros, $pag_request) {
 		
-        echo "  <table class='table table-striped table-condensed table-hover' style='width:600px'>\n";
+        echo "  <table class='table table-striped table-condensed table-bordered table-hover' style='width:600px'>\n";
         echo "      <tr class='titulo'>\n";
         echo "          <th width='5%'>C&oacute;digo</th>\n";
         echo "          <th>Cidade</th>\n";

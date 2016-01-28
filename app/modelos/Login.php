@@ -11,7 +11,7 @@
 /**
  * Classe Login
  * @author Célio Martins
- * Checa se o usuÃ¡rio tem permissão de acesso ao sistema
+ * Checa se o usuário tem permissão de acesso ao sistema
  */
 
 class Login {
@@ -21,8 +21,8 @@ class Login {
 	
 	/**
  	* Método efetuarLogin()
- 	* Checa se o usuário tem permissÃ£o de acesso ao sistema
-	* @param $post - login e senha passados via post do formulÃ¡rio de login
+ 	* Checa se o usuário tem permissão de acesso ao sistema
+	* @param $post - login e senha passados via post do formuário de login
  	*/	
 	
 	public function efetuarLogin($post) {
@@ -34,10 +34,9 @@ class Login {
 
             # seta o login e senha		
             $this->login = $post['campo_login'];
-            $this->senha = $post['campo_senha'];        
+            $this->senha = md5($post['campo_senha']);
 
             # criar conexão com o banco de dados
-            //$db = DB::criar('padrao');
             
             $db = new ConexaoDB();
             $db->conecta();
@@ -50,7 +49,7 @@ class Login {
             $db->desconecta();
                         
 
-            # se obteve resultado cria a sessÃ£o, caso contrÃ¡rio a destrÃ³i.
+            # se obteve resultado cria a sessão, caso contrário a destrói.
             if ($count > 0) {
                     $_SESSION["usuario"] = $this->login;
                     return 'True';

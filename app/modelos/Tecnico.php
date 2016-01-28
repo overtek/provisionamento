@@ -51,13 +51,28 @@ Class Tecnico {
     * Salva os dados de um técnico no DB
     */
     public function salva($post) {
+		
+		# criar conexão com o banco de dados
+        $db = new ConexaoDB();
+        $db->conecta();
 
         if (isset($post['codTecnico']) and strlen($post['codTecnico']) > 0) 
         {
+			# consulta o login do técnico para saber se foi alterado.
+			$consulta = "SELECT senhaTecnico from tbtecnico where idTecnico = " . $post['codTecnico'];
+			# executa a query e guarda o resultado na variavel
+	        $resultado = $db->selectDB($consulta);
+			# testo para ver se a senha foi alterada
+			if ($resultado[0]->senhaTecnico == $post['senhaTecnico']) {
+				$senhaTecnico = $post['senhaTecnico'];
+			} else {
+				$senhaTecnico = md5($post['senhaTecnico']);;
+			}
+
             $query = "UPDATE tbtecnico SET "
                     . "nomeTecnico = '" . $post['nomeTecnico'] . "', "
                     . "emailTecnico = '" . $post['emailTecnico'] . "', " 
-                    . "senhaTecnico = '" . $post['senhaTecnico'] . "', "
+                    . "senhaTecnico = '" . $senhaTecnico . "', "
                     . "statusTecnico = '" . $post['statusTecnico'] . "' "
                     . "where idTecnico = ". $post['codTecnico'];
         }
@@ -71,13 +86,10 @@ Class Tecnico {
                             .$post['nomeTecnico']. "', '"
                             .$post['emailTecnico'] . "', '"
                             .$post['senhaTecnico'] . "', "
-                            .$post['statusTecnico']
+                            .md5($post['statusTecnico'])
                     .")";
         }		
 
-        # criar conexão com o banco de dados
-        $db = new ConexaoDB();
-        $db->conecta();
 
         # executa a query e guarda o resultado na variavel
         $resultado = $db->updateDB($query);

@@ -52,7 +52,7 @@ class TecnicosControle extends Controle {
 		$this->visao->set('lista', $lista);
                 
                 # uso o método set para vincular a variável acao dentro da view
-                $this->visao->set('acao', pagina); 
+                $this->visao->set('acao', $pagina); 
 		
 		# renderiza a view
 		$this->visao->render('TecnicoView');

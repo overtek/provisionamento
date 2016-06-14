@@ -1,7 +1,10 @@
 RewriteEngine On
 
 #Gera o arquivo de provisionamento
+RewriteCond %{QUERY_STRING} versionChipset
+RewriteRule ^(.*)\.(cfg)$ /index.php?controle=Arquivo&acao=geraArquivo&mac=$1&version=2 [L, QSA]
 RewriteRule ^(.*)\.(cfg)$ /index.php?controle=Arquivo&acao=geraArquivo&mac=$1 [L,QSA]
+
 
 RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-f

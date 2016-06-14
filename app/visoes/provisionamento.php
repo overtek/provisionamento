@@ -31,7 +31,7 @@ echo '<<GEPON ONU CONFIG FILE>>Digests:'.$dados[0]->versaoConfigONU.'.101
         <FTPEnable>TRUE</FTPEnable>
       </X_CT-COM_ALGAbility>
       <X_CT-COM_TeleComAccount>
-        <Password>Pw@'.preg_replace('(\:)', '', $dados[0]->macONU).'</Password>
+        <Password>Pw'.preg_replace('(\:)', '', $dados[0]->macONU).'</Password>
       </X_CT-COM_TeleComAccount>
       <X_CT_COM_RemoteStatus>
         <StatusMessage>2</StatusMessage>

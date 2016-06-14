@@ -1,15 +1,15 @@
 <?php
 
 /*
- * Sistema de Documentação do Provedor
- * Autor: Célio Martins
- * Versão: 1.1
+ * Sistema de DocumentaÃ§Ã£o do Provedor
+ * Autor: CÃ©lio Martins
+ * VersÃ£o: 1.1
  */
 
 class ArquivoControle extends Controle {
 
     /**
-     * MÃ©todo geraArquivo()
+     * MÃƒÂ©todo geraArquivo()
      * Carrega os dados de uma ONU em um arquivo de provisionamento
      * 
      * @param int $mac MAC da ONU
@@ -17,7 +17,7 @@ class ArquivoControle extends Controle {
     public function geraArquivo() {
 
         if (!isset($_GET["mac"])) {
-            echo "Código do MAC não informado";
+            echo "CÃ³digo do MAC nÃ£o informado";
         } else {
 
             $mac = $_GET["mac"];
@@ -32,20 +32,27 @@ class ArquivoControle extends Controle {
             # carrega o modelo Provisionamento		
             $this->modelo('Provisionamento');
 
-            # executa o método getMac passando o mac da onu como parâmetro e guarda os dados na variável $dados
+            # executa o mÃ©todo getMac passando o mac da onu como parÃ¢metro e guarda os dados na variÃ¡vel $dados
             $dados = $this->Provisionamento->getMac($macONU);
 
             # checar se obteve resultado do BD
             if (count($dados) < 1) {
-                echo "MAC da ONU não encontrado no banco de dados";
+                echo "MAC da ONU nÃ£o encontrado no banco de dados";
                 exit();
             }
 
-            # seta os dados da variável $data para a View
+            # seta os dados da variÃ¡vel $data para a View
             $this->visao->set('dados', $dados);
-
-            # renderiza a view
-            $this->visao->render('provisionamento');
+			
+			# se existir o get da versÃ£o
+			if (isset($_GET["version"])) {
+				# renderiza a view versÃ£o 2
+	            $this->visao->render('provisionamento_v2');
+			} 
+			else {
+	            # renderiza a view versÃ£o 1
+    	        $this->visao->render('provisionamento');
+			}
         }
     }
 

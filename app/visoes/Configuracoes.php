@@ -1,6 +1,6 @@
 <?php
 
-   #pegar os dados cadastrados passados, validar e enviar para o formulário.
+   #pegar os dados cadastrados passados, validar e enviar para o formulÃ¡rio.
    $dados = json_decode($dados);
 
 
@@ -16,7 +16,7 @@
    echo " <div id='conteudo'>\n";
    echo " 	<div class='meioTabela'>\n";
    echo "      <h1>\n";
-   echo "          Configurações do Sistema\n";
+   echo "          ConfiguraÃ§Ãµes do Sistema\n";
    echo "      </h1>\n";
    echo " 	</div>\n";
    echo " <form name='form-config' id='form-config' onSubmit='return false' >\n";
@@ -45,5 +45,5 @@
    echo "   <input type='submit' value='Salvar' id='salvaTecnico' onClick='garvar_Config()' class='btGravar'/>";
    echo " </form>\n";
    echo "	<br><br>\n";
-   echo "  <br><p>Atenção. Após carregar as configurações a senha de acesso da ONU será composta pelas iniciais <b>\"Pw@\"</b> mais o <b>MAC</b> da ONU.</p><br>\n";
+   echo "  <br><p>AtenÃ§Ã£o. ApÃ³s carregar as configuraÃ§Ãµes a senha de acesso da ONU serÃ¡ composta pelas iniciais <b>\"Pw\"</b> mais o <b>MAC</b> da ONU.</p><br>\n";
    echo " </div>\n";
